@@ -33,6 +33,29 @@ class Matrix5x5(ht16k33_matrix.HT16K33Matrix):
             self.pixel(0,y, True)
         else:
             self.pixel(x+1, y, True)
+            
+     def buttons_read(self):
+        
+        self._write_cmd(_HT16K33_KEYS_REGISTER)
+
+        buttons_pressed = self.i2c.readfrom(_HT16K33_ADDRESS, 1) != 0
+        print(buttons_pressed)
+
+
+        self._write_cmd(_HT16K33_KEYINT_REGISTER)
+
+        buf = bytearray(2)
+
+        self.i2c.readfrom_into(_HT16K33_ADDRESS, buf)
+
+        print(self.i2c.readfrom(_HT16K33_ADDRESS, 2))
+
+
+        print(buf)
+
+        buttons_status = [buf[0] != 0, buf[1] != 0, buf[0] & buf[1] != 0]
+
+        return buttons_status
 
 
 
