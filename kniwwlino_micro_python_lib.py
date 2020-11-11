@@ -36,13 +36,13 @@ class Matrix5x5(ht16k33_matrix.HT16K33Matrix):
             
      def buttons_read(self):
         
-        self._write_cmd(_HT16K33_KEYS_REGISTER)
+        self._write_cmd(_HT16K33_KEYSINT_REGISTER)
 
         buttons_pressed = self.i2c.readfrom(_HT16K33_ADDRESS, 1) != 0
         print(buttons_pressed)
 
 
-        self._write_cmd(_HT16K33_KEYINT_REGISTER)
+        self._write_cmd(_HT16K33_KEY_REGISTER)
 
         buf = bytearray(2)
 
